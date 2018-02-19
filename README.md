@@ -193,6 +193,13 @@ Landing page is static and different CSS and JS due to time constraints.
 
 This copies over necessary artifacts to `resources` dir.
 
+### Seed postgres for local development
+
+Postgres can be seeded with some initial entities to work with by running:
+
+```
+lein run -m commiteth.db.seed/seed-postgres
+```
 
 ## More info
 Detailed information on code structure, troubleshooting, etc. can be found [here](doc/README.md).
