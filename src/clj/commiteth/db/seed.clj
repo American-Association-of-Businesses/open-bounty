@@ -39,11 +39,14 @@
 (s/def ::avatar_url (s/with-gen string?
                       #(gen/fmap (fn [username] (str "https://api.adorable.io/avatars/285/" username "@adorable.png"))
                                  (s/gen ::name))))
-
+#_
 (s/def ::address (s/with-gen (s/and string? #(= 42 (count %)))
                    #(gen/fmap (fn [rest-of-address] (str "0x" rest-of-address))
                               base-address-generator)))
 
+(s/def ::address (s/with-gen (s/and string? #(= 42 (count %)))
+                   ;; this address needs to be valid for ropsten
+                   #(s/gen #{"0xFC5A9d404edeDb10AA6fd379b07324aAA76019F9"})))
 
 (s/def ::user (s/keys :req-un [::id
                                ::name
@@ -81,6 +84,7 @@
 
 (s/def ::repo_id non-nil-pos-int)
 (s/def ::issue_id non-nil-pos-int)
+(s/def ::issue_number non-nil-pos-int)
 (s/def ::title string?)
 (s/def ::commit_sha string?)
 (s/def ::issue_number non-nil-pos-int)
@@ -88,6 +92,7 @@
 (s/def ::issue (s/keys :req-un [::repo_id
                                 ::issue_id
                                 ::title
+                                ::issue_number
                                 ::commit_sha]))
 
 (s/def ::pr_id non-nil-pos-int)
@@ -153,4 +158,5 @@
         (clojure.pprint/pprint))))
 
 ;; (seed-postgres)
+
 
